@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class InstaDriver(webdriver.Chrome):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.maximize_window()
+        #self.maximize_window()
 
     def login(self, username: str, password: str):
         """Login to Instagram"""
@@ -16,9 +16,9 @@ class InstaDriver(webdriver.Chrome):
         self.find_element(By.NAME, "password").send_keys(password)
         self.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
         self.implicitly_wait(5)
-        self.find_element(By.XPATH, "//button[contains(text(), 'Not Now')]").click()
+        #self.find_element(By.XPATH, "//button[contains(text(), 'Not Now')]").click()
         self.implicitly_wait(5)
-        self.find_element(By.XPATH, "//button[contains(text(), 'Not Now')]").click()
+        #self.find_element(By.XPATH, "//button[contains(text(), 'Not Now')]").click()
 
     def __get_profile(self, username: str):
         """Get profile page"""

@@ -12,3 +12,5 @@ autopep8
 pyunitreport
 beautifulsoup4
 undetected-chromedriver
+fastapi
+uvicorn

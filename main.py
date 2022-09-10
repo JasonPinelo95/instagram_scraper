@@ -1,8 +1,7 @@
+from selenium.webdriver.chrome.options import Options
 from typing import TypedDict
 from instadriver import InstaDriver
 import json
-import time
-
 
 class Config(TypedDict):
     username : str
@@ -27,7 +26,10 @@ if __name__ == "__main__":
     PATH : str = "./chromedriver"
 
     # Opening Instagram
-    driver : InstaDriver = InstaDriver(PATH)
+    chrome_options: Options = Options()
+    chrome_options.add_argument("--headless")
+
+    driver : InstaDriver = InstaDriver(PATH, options=chrome_options)
     driver.login(USERNAME, PASSWORD)
 
     # Get profile info
@@ -35,10 +37,11 @@ if __name__ == "__main__":
     PROFILE = "valter_med"
 
     profile : InstaProfile = driver.get_profile_info(PROFILE)
-    print(profile)
+    print("getting profile info...")
+    print(json.dumps(profile, indent=4))
+    print("done")
     
     # Closing Instagram
-    time.sleep(5)
     driver.close()
 
 
