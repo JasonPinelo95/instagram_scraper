@@ -1,0 +1,14 @@
+notebook
+pandas
+numpy
+selenium
+squarify
+gspread
+google-auth
+gspread-pandas
+requests
+lxml
+autopep8
+pyunitreport
+beautifulsoup4
+undetected-chromedriver
