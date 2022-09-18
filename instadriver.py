@@ -16,9 +16,9 @@ class InstaDriver(webdriver.Chrome):
         self.find_element(By.NAME, "password").send_keys(password)
         self.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
         self.implicitly_wait(5)
-        #self.find_element(By.XPATH, "//button[contains(text(), 'Not Now')]").click()
+        self.find_element(By.XPATH, "//button[contains(text(), 'Not Now')]").click()
         self.implicitly_wait(5)
-        #self.find_element(By.XPATH, "//button[contains(text(), 'Not Now')]").click()
+        self.find_element(By.XPATH, "//button[contains(text(), 'Not Now')]").click()
 
     def __get_profile(self, username: str):
         """Get profile page"""
@@ -44,6 +44,15 @@ class InstaDriver(webdriver.Chrome):
     def __get_is_private(self, username: str):
         """Get is private"""
         return len(self.find_elements(By.CSS_SELECTOR, "div h2")) > 1
+
+    def __get_post_info(self, post):
+        """Get post info"""
+        return {
+            "username": post.find_element(By.CSS_SELECTOR, "a").get_attribute("title"),
+            "post_url": post.find_element(By.CSS_SELECTOR, "a").get_attribute("href"),
+            "img_url": post.find_element(By.CSS_SELECTOR, "img").get_attribute("src"),
+            "caption": post.find_element(By.CSS_SELECTOR, "div:nth-of-type(2) span").text
+        }        
     
     def get_profile_info(self, username: str):
         """Get profile info"""

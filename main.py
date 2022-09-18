@@ -1,47 +1,24 @@
-from selenium.webdriver.chrome.options import Options
-from typing import TypedDict
-from instadriver import InstaDriver
 import json
-
-class Config(TypedDict):
-    username : str
-    password : str
-
-class InstaProfile(TypedDict):
-    username : str
-    biography : str
-    num_posts : int
-    follower_count : int
-    following_count : int
-    is_private : bool
+import streamlit as st
+import subprocess
 
 if __name__ == "__main__":
-    # Read credentianls from config file
+    st.title("Instagram Profile Scraper")
 
-    with open("config.json") as f:
-        config: Config = json.load(f)
-        USERNAME: str = config["username"]
-        PASSWORD: str = config["password"]
+    st.write("This is a simple Instagram profile scraper. \
+        It uses Selenium to scrape the profile page of a given user. \
+        It returns the following information: \
+        username, biography, number of posts, number of followers, number of following, \
+        and whether the profile is private or not.")
 
-    PATH : str = "./chromedriver"
+    with st.form("my_form"):
+        username = st.text_input("Enter your Instagram username")
+        password = st.text_input("Enter your Instagram password", type="password")
+        profile = st.text_input("Enter the profile you want to scrape")
+        submit_button = st.form_submit_button(label="Go")
 
-    # Opening Instagram
-    chrome_options: Options = Options()
-    chrome_options.add_argument("--headless")
-
-    driver : InstaDriver = InstaDriver(PATH, options=chrome_options)
-    driver.login(USERNAME, PASSWORD)
-
-    # Get profile info
-    #PROFILE = "jmbalanzar"
-    PROFILE = "valter_med"
-
-    profile : InstaProfile = driver.get_profile_info(PROFILE)
-    print("getting profile info...")
-    print(json.dumps(profile, indent=4))
-    print("done")
+    if submit_button:
+        subprocess.run(["python3", "scraper.py", username, password, profile])
+        st.write(json.load(open("{}.json".format(profile), "r")))
     
-    # Closing Instagram
-    driver.close()
-
-
+    
